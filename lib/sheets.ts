@@ -13,15 +13,15 @@ const auth = new JWT({
 const sheets = google.sheets({ version: "v4", auth });
 
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID!;
-const RANGE = "Página1!A2:C";
+const RANGE = "Página1!A2:D";
 
-export async function salvarPrestador(nome: string, especialidade: string, contato: string) {
+export async function salvarPrestador(nome: string, especialidade: string, contato: string, regiao: string) {
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
     range: RANGE,
     valueInputOption: "USER_ENTERED",
     requestBody: {
-      values: [[nome, especialidade, contato]],
+      values: [[nome, especialidade, contato, regiao]],
     },
   });
 }
