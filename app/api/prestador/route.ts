@@ -2,8 +2,7 @@ import { google } from 'googleapis';
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { nome, especialidade, contato, regioes } = body;
+    const { nome, especialidade, contato, regioes } = await request.json();
 
     if (!nome || !especialidade || !contato) {
       return new Response('Dados incompletos', { status: 400 });
@@ -18,21 +17,19 @@ export async function POST(request: Request) {
 
     const sheets = google.sheets({ version: 'v4', auth });
 
-    const result = await sheets.spreadsheets.values.append({
+    await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SPREADSHEET_ID,
-      range: 'Página1!A:D',
+      range: 'Página1!A:D', // Certifique-se que tenha 4 colunas
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [[nome, especialidade, contato, regioes.join(', ')]],
+        values: [[nome, especialidade, contato, regioes?.join(', ')]],
       },
     });
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-    });
-  } catch (err) {
-    console.error('Erro ao salvar no Google Sheets:', err);
-    return new Response('Erro interno do servidor', { status: 500 });
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (error) {
+    console.error('Erro ao salvar no Google Sheets:', error);
+    return new Response('Erro ao salvar', { status: 500 });
   }
 }
 
