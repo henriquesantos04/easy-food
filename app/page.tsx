@@ -1,8 +1,8 @@
 export default function Home() {
   return (
-    <main style={{ padding: 40 }}>
-      <h1>🍽️ Bem-vindo ao Easy Food!</h1>
-      <p>Conectando você com chefs e cozinheiros locais com facilidade.</p>
+    <main className="flex min-h-screen flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold">Bem-vindo ao Easy Food</h1>
+      <p className="mt-4 text-lg">Seu MVP está funcionando 🎉</p>
     </main>
-  )
+  );
 }
