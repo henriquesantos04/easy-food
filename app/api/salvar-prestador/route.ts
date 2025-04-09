@@ -1,4 +1,3 @@
-// app/api/salvar-prestador/route.ts
 import { NextResponse } from 'next/server';
 import { salvarPrestador } from '@/lib/sheets';
 

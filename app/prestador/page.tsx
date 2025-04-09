@@ -12,7 +12,7 @@ export default function PrestadorPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch('/api/prestador', {
+      const res = await fetch('/api/salvar-prestador', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, especialidade, contato }),
