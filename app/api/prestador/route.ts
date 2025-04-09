@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     }
 
     const regioesString = regioes.join(', ');
-
     await salvarPrestador(nome, especialidade, contato, regioesString);
 
     return NextResponse.json({ mensagem: 'Cadastro realizado com sucesso!' });
@@ -19,6 +18,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ erro: 'Erro interno no servidor.' }, { status: 500 });
   }
 }
+
 
 
 
