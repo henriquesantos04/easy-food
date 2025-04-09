@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server';
 import { salvarPrestador } from '@/lib/sheets';
 
 export async function POST(req: Request) {
+  const { nome, especialidade, contato } = await req.json();
+
   try {
-    const { nome, especialidade, contato } = await req.json();
     await salvarPrestador(nome, especialidade, contato);
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ status: 'ok' });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ ok: false, error: 'Erro ao salvar dados' }, { status: 500 });
+    return NextResponse.json({ error: 'Erro ao salvar' }, { status: 500 });
   }
 }

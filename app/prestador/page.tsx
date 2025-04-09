@@ -1,13 +1,55 @@
-export default function Prestador() {
+'use client';
+
+import { useState } from 'react';
+
+export default function PrestadorPage() {
+  const [nome, setNome] = useState('');
+  const [especialidade, setEspecialidade] = useState('');
+  const [contato, setContato] = useState('');
+  const [mensagem, setMensagem] = useState('');
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    try {
+      const res = await fetch('/api/salvar-prestador', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, especialidade, contato }),
+      });
+
+      if (res.ok) {
+        setMensagem('Prestador cadastrado com sucesso!');
+        setNome('');
+        setEspecialidade('');
+        setContato('');
+      } else {
+        setMensagem('Erro ao cadastrar. Tente novamente.');
+      }
+    } catch (error) {
+      setMensagem('Erro na requisição.');
+    }
+  }
+
   return (
-    <main className="min-h-screen p-6">
-      <h2 className="text-2xl font-bold mb-4">Cadastro de Prestador</h2>
-      <form className="flex flex-col gap-4 max-w-md">
-        <input className="border p-2 rounded" placeholder="Nome" />
-        <input className="border p-2 rounded" placeholder="Especialidade culinária" />
-        <input className="border p-2 rounded" placeholder="Contato (email ou telefone)" />
-        <button className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">Cadastrar</button>
+    <div style={{ padding: 20 }}>
+      <h1>Cadastro de Prestador</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nome:</label>
+          <input value={nome} onChange={(e) => setNome(e.target.value)} required />
+        </div>
+        <div>
+          <label>Especialidade:</label>
+          <input value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} required />
+        </div>
+        <div>
+          <label>Contato:</label>
+          <input value={contato} onChange={(e) => setContato(e.target.value)} required />
+        </div>
+        <button type="submit">Cadastrar</button>
       </form>
-    </main>
+      {mensagem && <p>{mensagem}</p>}
+    </div>
   );
 }
