@@ -1,3 +1,4 @@
+// lib/sheets.ts
 import { google } from 'googleapis';
 import { JWT } from 'google-auth-library';
 
@@ -18,15 +19,14 @@ export async function salvarPrestador(
   nome: string,
   especialidade: string,
   contato: string,
-  regioes: string[]
+  regioes: string
 ) {
-  const regioesFormatadas = regioes.join(', ');
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
     range: RANGE,
     valueInputOption: 'USER_ENTERED',
     requestBody: {
-      values: [[nome, especialidade, contato, regioesFormatadas]],
+      values: [[nome, especialidade, contato, regioes]],
     },
   });
 }

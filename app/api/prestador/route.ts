@@ -1,3 +1,4 @@
+// app/api/prestador/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { salvarPrestador } from '@/lib/sheets';
 
@@ -14,10 +15,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ mensagem: 'Cadastro realizado com sucesso!' });
   } catch (erro) {
-    console.error(erro);
+    console.error('Erro interno no servidor:', erro);
     return NextResponse.json({ erro: 'Erro interno no servidor.' }, { status: 500 });
   }
 }
+
 
 
 
